@@ -8,3 +8,140 @@ body {
     margin: 0;
     overflow: hidden;
 }
+
+#maze-container {
+    position: relative;
+    margin: 20px;
+    box-shadow: 0 30px rgba(76,175,80,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translate(-10px);
+    }
+}
+
+.cell {
+    position: relative;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.9);
+    transition: background 0.3s ease;
+}
+
+.cell.exit {
+    background: linear-gradient(#ff6666, #ff9999);
+    animation: exitGlow 2s infinite;
+}
+
+@keyframes exitGlow {
+    0%, 100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.wall {
+    background-color: #333;
+    position: absolute;
+}
+    
+.wall.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+}
+
+.wall.right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+}
+
+.wall.bottom {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+}
+
+.wall.left {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 2px;
+}
+
+#player {
+    position: absolute;
+    background: radial-gradient(cirle, #4caf50, #45a049);
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(76,175,80,0.5);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+#controls {
+    margin: 10px;
+    display: grid;
+    grid-template-areas:
+        ". up ."
+        "left . right"
+        ". down .";
+        gap: 10px;
+        justify-content: center;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    background: linear-gradient(45deg, #333, #444);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+}
+
+#up {
+    grid-area: up;
+}
+
+#left {
+    grid-area: left;
+}
+
+#right {
+    grid-area: right;
+}
+
+#down {
+    grid-area: down;
+}
