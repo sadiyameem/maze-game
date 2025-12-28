@@ -145,3 +145,75 @@ body {
 #down {
     grid-area: down;
 }
+
+#message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0,0.95);
+    color: white;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+    opacity: 0;
+    animation: messageAppear 0.5s forwards;
+    box-shadow: 0 0 30px rgba(76,175,80,0.3);
+    border: 2px solid #4caf50;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#try-again {
+    background: linear-gradient(45deg, #4caf50, #45a049);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+#try-again:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(76,175,80,0.9);
+}
+
+#timer {
+    font-size: 28px;
+    margin: 20px;
+    color: white;
+    text-shadow: 0 0 10px rgba(76,175,80,0.5);
+    padding: 10px 20px;
+    border-radius: 18px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid #4caf50;
+}
+
+.exit {
+    background-color: #ffcccc;
+}
+
+#maze {
+    display: grid;
+    background-color: white;
+}
+
+.hover-effect {
+    background: linear-gradient(45deg, #4caf50, #45a049) !important;
+    transform: scale(1.15) !important;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5) !important;
+}
