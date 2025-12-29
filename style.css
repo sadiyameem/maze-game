@@ -2,7 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+    background: white;
     font-family: "Arial", sans-serif;
     min-height: 100vh;
     margin: 0;
@@ -70,7 +70,7 @@ body {
 }
 
 .wall.bottom {
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 2px;
@@ -79,13 +79,13 @@ body {
 .wall.left {
     top: 0;
     left: 0;
-    right: 0;
+    bottom: 0;
     width: 2px;
 }
 
 #player {
     position: absolute;
-    background: radial-gradient(cirle, #4caf50, #45a049);
+    background: radial-gradient(circle, #4caf50, #45a049);
     transition: all 0.2s ease;
     border-radius: 50%;
     box-shadow: 0 0 15px rgba(76,175,80,0.5);
@@ -157,7 +157,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0,0.95);
+    background: rgba(0,0,0,0.95);
     color: white;
     padding: 30px 40px;
     border-radius: 20px;
@@ -215,7 +215,7 @@ body {
 
 #maze {
     display: grid;
-    background-color: white;
+    background-color: black;
 }
 
 .hover-effect {

@@ -27,10 +27,13 @@ function generatorMaze () {
         let neighbors = [];
         if (current.x > 0 && !maze[current.x - 1].visited)
             neighbors.push("left");
+
         if (current.x < MAZE_SIZE - 1 && !maze[current.y][current.x + 1].visited)
             neighbors.push("right");
+
         if (current.x > 0 && !maze[current.y - 1][current.x].visited)
             neighbors.push("top");
+
         if (current.x < MAZE_SIZE - 1 && !maze[current.y + 1][current.x].visited)
             neighbors.push("bottom");
 
@@ -114,7 +117,7 @@ function generatorMaze () {
 
 function renderMaze() {
     const container = document.getElementById("maze");
-    container.style.gridTemplateColumns = `repeat($(MAZE_SIZE), ${CELL_SIZE}px)`;
+    container.style.gridTemplateColumns = `repeat(${MAZE_SIZE}, ${CELL_SIZE}px)`;
     container.innerHTML = "";
 
     for (let y = 0; y < MAZE_SIZE; y++) {
@@ -124,7 +127,7 @@ function renderMaze() {
             cell.style.width = CELL_SIZE + "px";
             cell.style.height = CELL_SIZE + "px";
 
-            Object.entries(maze[y][y].walls).forEach(([dir, exists]) => {
+            Object.entries(maze[y][x].walls).forEach(([dir, exists]) => {
                 if (exists) {
                     const wall = document.createElement("div");
                     wall.className = `wall ${dir}`;
@@ -156,7 +159,7 @@ function movePlayer(direction) {
     const walls = maze[player.y][player.x].walls;
     switch (direction) {
         case "up":
-            if (!walls.bottom) player.y--;
+            if (!walls.top) player.y--;
             break;
         case "down":
             if (!walls.bottom) player.y++;
@@ -165,13 +168,13 @@ function movePlayer(direction) {
             if (!walls.left) player.x--;
             break;
         case "right":
-            if (walls.right) player.x++;
+            if (!walls.right) player.x++;
             break;
     }
     updatePlayerPosition();
 }
 
-function showMessage() {
+function showMessage(text) {
     gameActive = false;
     clearInterval(timer);
     document.getElementById("message-text").textContent = text;
@@ -195,23 +198,6 @@ function initGame() {
         }
     }, 1000);
 }
-
-document.addEventListener("keydown", (e) => {
-    const directions = {
-        ArrowUp: "up",
-        ArrowDown: "down",
-        ArrowLeft: "left",
-        ArrowRight: "right",
-    };
-    if (directions[e.key] && gameActive) {
-        movePlayer(directions[e.key]);
-        const buttonId = directions[e.key];
-        const button = document.getElementById(buttonId);
-        if (button) {
-            button.classList.add("hover-effect");
-        }
-    }
-});
 
 document.addEventListener("keydown", (e) => {
     const directions = {
