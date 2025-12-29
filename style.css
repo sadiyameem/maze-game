@@ -126,6 +126,12 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+.control-btn:hover {
+    background: linear-gradient(43deg, #4caf50, #45a049);
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
 .control-btn:active {
     transform: scale(0.9);
 }

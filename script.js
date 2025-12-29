@@ -81,7 +81,7 @@ function generatorMaze () {
                 break;
             case 1:
                 exitX = MAZE_SIZE - 1;
-                exitY = Math.floor(Math.random * MAZE_SIZE);
+                exitY = Math.floor(Math.random() * MAZE_SIZE);
                 break;
             case 2:
                 exitY = MAZE_SIZE - 1;
@@ -195,3 +195,39 @@ function initGame() {
         }
     }, 1000);
 }
+
+document.addEventListener("keydown", (e) => {
+    const directions = {
+        ArrowUp: "up",
+        ArrowDown: "down",
+        ArrowLeft: "left",
+        ArrowRight: "right",
+    };
+    if (directions[e.key] && gameActive) {
+        movePlayer(directions[e.key]);
+        const buttonId = directions[e.key];
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.classList.add("hover-effect");
+        }
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    const directions = {
+        ArrowUp: "up",
+        ArrowDown: "down",
+        ArrowLeft: "left",
+        ArrowRight: "right",
+    };
+    if (directions[e.key] && gameActive) {
+        movePlayer(directions[e.key]);
+        const buttonId = directions[e.key];
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.classList.add("hover-effect");
+        }
+    }
+});
+
+initGame();
