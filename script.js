@@ -135,4 +135,63 @@ function renderMaze() {
             container.appendChild(cell);
         }
     }
+
+    updatePlayerPosition();
+}
+
+function updatePlayerPosition() {
+    const playerElem = document.getElementById("player");
+    playerElem.style.width = CELL_SIZE * 0.6 + "px";
+    playerElem.style.height = CELL_SIZE * 0.6 + "px";
+    playerElem.style.left = player.x * CELL_SIZE + CELL_SIZE * 0.2 + "px";
+    playerElem.style.top = player.y * CELL_SIZE + CELL_SIZE * 0.2 + "px";
+
+    if (player.x === exitPos.x && player.y === exitPos.y) {
+        showMessage("winner!");
+    }
+}
+
+function movePlayer(direction) {
+    if (!gameActive) return;
+    const walls = maze[player.y][player.x].walls;
+    switch (direction) {
+        case "up":
+            if (!walls.bottom) player.y--;
+            break;
+        case "down":
+            if (!walls.bottom) player.y++;
+            break;
+        case "left":
+            if (!walls.left) player.x--;
+            break;
+        case "right":
+            if (walls.right) player.x++;
+            break;
+    }
+    updatePlayerPosition();
+}
+
+function showMessage() {
+    gameActive = false;
+    clearInterval(timer);
+    document.getElementById("message-text").textContent = text;
+    document.getElementById("message").style.display = "block";
+}
+
+function initGame() {
+    gameActive = true;
+    timeLeft = 30;
+    document.getElementById("timer").textContent = `Timer: ${timeLeft}`;
+    document.getElementById("message").style.display = "none";
+    player = { x: 0, y: 0};
+    generatorMaze();
+    renderMaze();
+
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = `Time: ${timeLeft}`;
+        if (timeLeft <= 0) {
+            showMessage("Time Up!");
+        }
+    }, 1000);
 }
