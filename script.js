@@ -163,7 +163,7 @@ const restartGame = () => {
             friction: 0,
             label: 'ball',
                 render: {
-                    fillStyle: 'rgb(255,140,0)'
+                    fillStyle: 'rgba(147,112,219,0.8)'
                 }
         }
     );
