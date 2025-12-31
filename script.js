@@ -24,7 +24,7 @@ restartGame = () => {
     Render.run(render);
     Runner.run(Runner.create(), engine);
 
-    //Borders Bounds
+    // Borders Bounds
     const walls = [
         Bodies.rectangle(width/2, 0, width, 2, {isStatic: true, label: 'border'}),
         Bodies.rectangle(width/2, height, width, 2, {isStatic: true, label: 'border'}),
@@ -33,7 +33,7 @@ restartGame = () => {
     ];
     World.add(world, walls);
 
-    //Generating Maze
+    // Generating Maze
     const shuffle = arr => {
         let counter = arr.length;
 
@@ -50,7 +50,7 @@ restartGame = () => {
     };
     const grid = Array(cellVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 
-    //walls
+    // Walls
     const verticals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal -1 ).fill(false));
 
     const horizontals = Array(cellsVertical).fill(null).map(() => Array(cellHorizontal).fill(false));
@@ -136,4 +136,87 @@ restartGame = () => {
     });
 
     // Goal
+    const goal = Bodies.rectangle(
+        width - unitLenghtX/2,
+        height - unitLenghtY/2,
+        unitLenghtX * .7,
+        unitLenghtY * .7,
+        {
+            label: 'goal',
+            isStatic: true,
+            render: {
+                fillStyle: 'rgb(144,238,144)'
+            }
+        }
+    );
+    World.add(world, goal);
+
+    // Ball
+    const ballRadius = Math.min(unitLenghtX, unitLenghtY) / 4;
+    const ball = Bodies.circle(
+        unitLenghtX / 2,
+        unitLenghtY / 2,
+        ballRadius,
+        {
+            friction: 0,
+            label: 'ball',
+                render: {
+                    fillStyle: 'rgb(255,140,0)'
+                }
+        }
+    );
+    World.add(world, ball);
+
+    const removeInfo = () => {
+        document.querySelector('.info').classList.add('hidden');
+    }
+    document.addEventListener('keydown', event => {
+        const {x,y} = ball.velocity;
+        removeInfo();
+        if (event.keyCode === 87 || event.keyCode === 38) {
+            Body.setVelocity(ball, {x,y: y-2});
+        }
+        if (event.keyCode === 68 || event.keyCode === 39) {
+            Body.setVelocity(ball, {x: x + 2, y});
+        }
+        if (event.keyCode === 83 || event.keyCode === 40) {
+            Body.setVelocity(ball, {x,y: y + 2});
+        }
+        if (event.keyCode === 65 || event.keyCode === 37) {
+            Body.setVelocity(ball, {x: x -2,y});
+        }
+    });
+
+    // Win Condition
+    Events.on(engine, 'collisionStart', event => {
+        event.pairs.forEach((collision) => {
+            const labels = ['ball', 'goal'];
+
+            if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
+                document.querySelector('.winner').classList.remove('hidden');
+                world.gravity.y = 1;
+                world.bodies.forEach(body => {
+                    if (body.label === 'wall') {
+                        Body.setStatic(body, false);
+                    }
+                });
+            }
+        });
+    });
+
+    // Restart Game
+    document.querySelector('.restart').addEventListener('click', event => {
+        event.preventDefault();
+        World.clear(world);
+        Engine.clear(engine);
+        Render.stop(render);
+        render.canvas.remove();
+        render.canvas = null;
+        render.context = null;
+        render.textures = {};
+        document.querySelector('.winner').classList.ass('hidden');
+        document.querySelector('.info').classList.remove('hidden');
+        restartGame();
+    });
 }
+restartGame();
