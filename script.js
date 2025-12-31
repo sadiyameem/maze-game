@@ -4,7 +4,7 @@ restartGame = () => {
     const cellsHorizontal = 20;
     const cellsVertical = 10;
     const width = window.innerWidth;
-    const height = windopw.innerHeight;
+    const height = window.innerHeight;
 
     const unitLenghtX = width / cellsHorizontal;
     const unitLenghtY = height / cellsVertical;
@@ -29,7 +29,7 @@ restartGame = () => {
         Bodies.rectangle(width/2, 0, width, 2, {isStatic: true, label: 'border'}),
         Bodies.rectangle(width/2, height, width, 2, {isStatic: true, label: 'border'}),
         Bodies.rectangle(0, height/2, 2, height, {isStatic: true, label: 'border'}),
-        Bodies.rectangle(width, height/2, 2, height, {isStaic: true, label: 'border'})
+        Bodies.rectangle(width, height/2, 2, height, {isStatic: true, label: 'border'})
     ];
     World.add(world, walls);
 
@@ -48,12 +48,12 @@ restartGame = () => {
         }
         return arr;
     };
-    const grid = Array(cellVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
+    const grid = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 
     // Walls
     const verticals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal -1 ).fill(false));
 
-    const horizontals = Array(cellsVertical).fill(null).map(() => Array(cellHorizontal).fill(false));
+    const horizontals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 
     const startRow = Math.floor(Math.random() * cellsVertical);
     const startColumn = Math.floor(Math.random() * cellsHorizontal);
@@ -74,7 +74,7 @@ restartGame = () => {
             if (nextRow < 0 || nextRow >= cellsVertical || nextColumn < 0 || nextColumn >= cellsHorizontal) {
                 continue;
             }
-            if (gris[nextRow][nextColumn]) {
+            if (grid[nextRow][nextColumn]) {
                 continue;
             }
             if (direction === 'left') {
@@ -97,7 +97,7 @@ restartGame = () => {
             }
             const wall = Bodies.rectangle(
                 columnIndex * unitLenghtX + unitLenghtX/2,
-                rowIndex * unitLenghtX + unitLenghtY,
+                rowIndex * unitLenghtX + unitLenghtY / 2,
                 unitLenghtX,
                 5,
                 {
@@ -214,7 +214,7 @@ restartGame = () => {
         render.canvas = null;
         render.context = null;
         render.textures = {};
-        document.querySelector('.winner').classList.ass('hidden');
+        document.querySelector('.winner').classList.add('hidden');
         document.querySelector('.info').classList.remove('hidden');
         restartGame();
     });
