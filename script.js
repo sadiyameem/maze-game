@@ -1,4 +1,4 @@
-restartGame = () => {
+const restartGame = () => {
     const { Engine, Render, Runner, World, Bodies, Body, Events} = Matter;
 
     const cellsHorizontal = 20;
@@ -55,8 +55,8 @@ restartGame = () => {
 
     const horizontals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 
-    const startRow = Math.floor(Math.random() * cellsVertical);
-    const startColumn = Math.floor(Math.random() * cellsHorizontal);
+    const startRow = 0;
+    const startColumn = 0;
 
     const stepThroughCell = (row, column) => {
         if (grid[row][column]) {
@@ -78,11 +78,11 @@ restartGame = () => {
                 continue;
             }
             if (direction === 'left') {
-                verticals[row][column -1] = true;
+                verticals[row][column - 1] = true;
             } else if (direction === 'right') {
                 verticals[row][column] = true;
             } else if (direction === 'up') {
-                horizontals[row -1][column] = true;
+                horizontals[row - 1][column] = true;
             } else if (direction === 'down') {
                 horizontals[row][column] = true;
             }
@@ -97,7 +97,7 @@ restartGame = () => {
             }
             const wall = Bodies.rectangle(
                 columnIndex * unitLenghtX + unitLenghtX/2,
-                rowIndex * unitLenghtX + unitLenghtY / 2,
+                rowIndex * unitLenghtY + unitLenghtY / 2,
                 unitLenghtX,
                 5,
                 {
@@ -136,11 +136,13 @@ restartGame = () => {
     });
 
     // Goal
+    const wallThickness = 5;
+    const goalBuffer = 30;
     const goal = Bodies.rectangle(
-        width - unitLenghtX/2,
-        height - unitLenghtY/2,
-        unitLenghtX * .7,
-        unitLenghtY * .7,
+        width - unitLenghtX / 2,
+        height - unitLenghtY / 2 - wallThickness/2 - goalBuffer,
+        unitLenghtX * 0.7,
+        unitLenghtY * 0.7,
         {
             label: 'goal',
             isStatic: true,
@@ -152,7 +154,7 @@ restartGame = () => {
     World.add(world, goal);
 
     // Ball
-    const ballRadius = Math.min(unitLenghtX, unitLenghtY) / 4;
+    const ballRadius = Math.min(unitLenghtX, unitLenghtY) / 6;
     const ball = Bodies.circle(
         unitLenghtX / 2,
         unitLenghtY / 2,
@@ -202,21 +204,6 @@ restartGame = () => {
                 });
             }
         });
-    });
-
-    // Restart Game
-    document.querySelector('.restart').addEventListener('click', event => {
-        event.preventDefault();
-        World.clear(world);
-        Engine.clear(engine);
-        Render.stop(render);
-        render.canvas.remove();
-        render.canvas = null;
-        render.context = null;
-        render.textures = {};
-        document.querySelector('.winner').classList.add('hidden');
-        document.querySelector('.info').classList.remove('hidden');
-        restartGame();
     });
 }
 restartGame();
