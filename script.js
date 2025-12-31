@@ -23,4 +23,30 @@ restartGame = () => {
     });
     Render.run(render);
     Runner.run(Runner.create(), engine);
+
+    //Borders Bounds
+    const walls = [
+        Bodies.rectangle(width/2, 0, width, 2, {isStatic: true, label: 'border'}),
+        Bodies.rectangle(width/2, height, width, 2, {isStatic: true, label: 'border'}),
+        Bodies.rectangle(0, height/2, 2, height, {isStatic: true, label: 'border'}),
+        Bodies.rectangle(width, height/2, 2, height, {isStaic: true, label: 'border'})
+    ];
+    World.add(world, walls);
+
+    //Generating Maze
+    const shuffle = arr => {
+        let counter = arr.length;
+
+        while (counter > 0) {
+            const index = Math.floor(Math.random() * counter);
+
+            counter--;
+
+            const temp = arr[counter];
+            arr[counter] = arr[index];
+            arr[index] = temp;
+        }
+        return arr;
+    };
+    const grid = Array(cellVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 }
