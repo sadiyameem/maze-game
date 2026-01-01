@@ -90,6 +90,7 @@ const restartGame = () => {
         }
     };
     stepThroughCell(startRow, startColumn);
+
     horizontals.forEach((row, rowIndex) => {
         row.forEach((open, columnIndex) => {
             if (open) {
@@ -105,7 +106,7 @@ const restartGame = () => {
                     label: 'wall',
                     isStatic: true,
                     render: {
-                        fillStyle: 'rgb(216,191,216)'
+                        fillStyle: '#7dd3fc'
                     }
                 }
             );
@@ -147,7 +148,7 @@ const restartGame = () => {
             label: 'goal',
             isStatic: true,
             render: {
-                fillStyle: 'rgb(144,238,144)'
+                fillStyle: '#e07bb0'
             }
         }
     );
